@@ -159,36 +159,44 @@ class SnakeRender2D {
                 p.push_back({s.points[otherT.first]});
             }
             glm::vec2 l1 = p_c - p[0];
-            glm::vec2 l2 = p_c - p[1];
+            glm::vec2 l2 = p[1] - p_c;
 
             float a1 = std::atan2(l1[1], l1[0]);
             float a2 = std::atan2(l2[1], l2[0]);
-            float diffa = (a2 - a1);
+            float diffa = fabs((glm::pi<float>() - fabs(a2 - a1))/2);
+            // if(!(diffa <= ))
+            // if (diffa < 0) {
+            //     diffa += glm::pi<float>();
+            // }
 
             // auto a90v = std::atan2()
             // float p1 =
-            float polar1 = std::atan2(forward[1], forward[0]);
+            float polar1 = std::atan2(forward[1], forward[0]) + 2*glm::pi<float>();
+            // if (i == 1)
+            //     std::cout << "forward: " << polar1 << " diffa: " << diffa
+            //               << std::endl;
 
+            diffa+=polar1; 
             glm::vec2 np1 =
                 p_c + 13.f * glm::vec2(glm::cos(diffa), glm::sin(diffa));
             glm::vec2 np2 =
                 p_c - 13.f * glm::vec2(glm::cos(diffa), glm::sin(diffa));
             // if (abs(diffa - front ? a1 : a2) <= glm::pi<float>() / 2) {
-            if (diffa - polar1 <= glm::pi<float>() / 2) {
+            // if (diffa - polar1 <= glm::pi<float>() / 2) {
                 vertices.push_back(np1[0]);
                 vertices.push_back(np1[1]);
                 vertices.push_back(0.f);
                 vertices.push_back(np2[0]);
                 vertices.push_back(np2[1]);
                 vertices.push_back(1.f);
-            } else {
-                vertices.push_back(np2[0]);
-                vertices.push_back(np2[1]);
-                vertices.push_back(1.f);
-                vertices.push_back(np1[0]);
-                vertices.push_back(np1[1]);
-                vertices.push_back(0.f);
-            }
+            // } else {
+            //     vertices.push_back(np2[0]);
+            //     vertices.push_back(np2[1]);
+            //     vertices.push_back(1.f);
+            //     vertices.push_back(np1[0]);
+            //     vertices.push_back(np1[1]);
+            //     vertices.push_back(0.f);
+            // }
             // } else {
             // }
 
@@ -252,16 +260,16 @@ class SnakeMesh2D {
         std::vector<Uint32> eboInd;
         int j = 0;
         for (int i = 0; i < v.size() - 6; i += 6) {
-            bool isCrossing = false;
-            auto p0 = glm::vec2(v[i], v[i + 1]);
-            auto p1 = glm::vec2(v[i + 3], v[i + 4]);
-            auto p2 = glm::vec2(v[i + 6], v[i + 7]);
-            auto p3 = glm::vec2(v[i + 9], v[i + 10]);
+            // bool isCrossing = false;
+            // auto p0 = glm::vec2(v[i], v[i + 1]);
+            // auto p1 = glm::vec2(v[i + 3], v[i + 4]);
+            // auto p2 = glm::vec2(v[i + 6], v[i + 7]);
+            // auto p3 = glm::vec2(v[i + 9], v[i + 10]);
 
-            auto l1 = p0 - p2;
-            auto l2 = p1 - p3;
-            float a1 = std::atan2(l1[1], l1[0]);
-            float a2 = std::atan2(l2[1], l2[0]);
+            // auto l1 = p0 - p2;
+            // auto l2 = p1 - p3;
+            // float a1 = std::atan2(l1[1], l1[0]);
+            // float a2 = std::atan2(l2[1], l2[0]);
             // if (i == 0) {
             //     // std::cout << glm::to_string(p0) << " " <<
             //     glm::to_string(p1)
@@ -271,7 +279,7 @@ class SnakeMesh2D {
             //     "<<glm::to_string(l2)<<std::endl; std::cout << a1 <<"
             //     "<<a2<<std::endl;
             // }
-            if (abs(a1 - a2) <= 0.1) {
+            // if (abs(a1 - a2) <= 0.1) {
 
                 eboInd.push_back(j);
                 eboInd.push_back(j + 1);
@@ -279,15 +287,15 @@ class SnakeMesh2D {
                 eboInd.push_back(j + 1);
                 eboInd.push_back(j + 2);
                 eboInd.push_back(j + 3);
-            } else {
-                // std::cout<<"not parallel"<<std::endl;
-                eboInd.push_back(j);
-                eboInd.push_back(j + 1);
-                eboInd.push_back(j + 3);
-                eboInd.push_back(j + 1);
-                eboInd.push_back(j + 2);
-                eboInd.push_back(j + 3);
-            }
+            // } else {
+            //     // std::cout<<"not parallel"<<std::endl;
+            //     eboInd.push_back(j);
+            //     eboInd.push_back(j + 1);
+            //     eboInd.push_back(j + 3);
+            //     eboInd.push_back(j + 1);
+            //     eboInd.push_back(j + 2);
+            //     eboInd.push_back(j + 3);
+            // }
             // if (v[i] > 0 || v[i + 6] > 0)
             //     std::cout << "i: " << v[i] << " i+6: " << v[i + 6] <<
             //     std::endl;
